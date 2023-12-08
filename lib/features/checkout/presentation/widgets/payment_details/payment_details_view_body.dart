@@ -1,0 +1,56 @@
+import 'package:check_out_payment/config/routes/routes.dart';
+import 'package:check_out_payment/core/utils/app_navigator.dart';
+import 'package:check_out_payment/core/widgets/custom_button.dart';
+import 'package:check_out_payment/core/widgets/custom_credit_card.dart';
+import 'package:check_out_payment/features/checkout/presentation/widgets/payment_details/payment_list_view_item.dart';
+import 'package:flutter/material.dart';
+
+class PaymentDetailsViewBody extends StatefulWidget {
+  const PaymentDetailsViewBody({super.key});
+
+  @override
+  State<PaymentDetailsViewBody> createState() => _PaymentDetailsViewBodyState();
+}
+
+class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        const SliverToBoxAdapter(
+          child: PaymentListView(),
+        ),
+        SliverToBoxAdapter(
+          child: CustomCreditCard(
+            formKey: formKey,
+            autovalidateMode: autovalidateMode,
+          ),
+        ),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 14, left: 16, right: 16),
+              child: CustomButton(
+                title: "Pay",
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                  } else {
+                    context.navigateTo(
+                        routeName: Routes.successPaymentViewRoute);
+                    autovalidateMode = AutovalidateMode.always;
+                    setState(() {});
+                  }
+                },
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
