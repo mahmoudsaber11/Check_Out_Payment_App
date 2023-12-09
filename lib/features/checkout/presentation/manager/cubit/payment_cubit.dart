@@ -4,7 +4,7 @@ import 'package:check_out_payment/features/checkout/presentation/manager/cubit/p
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
-  PaymentCubit(this.checkOutRepo) : super(PaymentInitial());
+  PaymentCubit({required this.checkOutRepo}) : super(PaymentInitial());
 
   final CheckOutRepo checkOutRepo;
 
