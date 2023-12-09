@@ -8,3 +8,8 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   runApp(const CheckOutApp());
 }
+// PaymentIntentObject create payment intent(amount,currency)
+// init payment sheet (PaymentIntentClientSecret)
+
+
+// presentPaymentSheet()
