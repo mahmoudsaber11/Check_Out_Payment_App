@@ -11,7 +11,7 @@ class DioConsumer {
     Response response = await dio.post(url,
         data: body,
         options: Options(
-            contentType: contentType,
+            contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': "Bearer $token"}));
     return response;
   }
