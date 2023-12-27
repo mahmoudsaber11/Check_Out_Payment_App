@@ -11,9 +11,16 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   ServiceLocator().setupServiceLocator();
   runApp(const CheckOutApp());
-}
+} 
+//part one
+
 // PaymentIntentObject create payment intent(amount,currency)
 // init payment sheet (PaymentIntentClientSecret)
-
-
 // presentPaymentSheet()
+
+//part two
+
+//PaymentIntentModel create payment intent(amount,currency,customerId)
+//createEphemeralKey(stripeVersion, customerId)
+//initPaymentSheet(merchantDisplayName , intentClientSecret , ephemeralKeySecret)
+//presentPaymentSheet()
