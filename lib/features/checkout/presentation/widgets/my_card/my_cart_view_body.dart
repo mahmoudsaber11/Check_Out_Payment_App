@@ -3,6 +3,7 @@ import 'package:check_out_payment/features/checkout/presentation/manager/cubit/p
 import 'package:check_out_payment/features/checkout/presentation/widgets/my_card/card_info_item.dart';
 import 'package:check_out_payment/features/checkout/presentation/total_price.dart';
 import 'package:check_out_payment/features/checkout/presentation/widgets/my_card/payment_buttom_sheet.dart';
+import 'package:check_out_payment/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,7 +64,7 @@ class MyCartViewBody extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return BlocProvider(
-                      create: (context) => PaymentCubit(checkOutRepo),
+                      create: (context) => serviceLocator.get<PaymentCubit>(),
                       child: const PaymentButtomSheet());
                 },
               );

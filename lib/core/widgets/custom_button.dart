@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, this.onTap, required this.title});
+  const CustomButton(
+      {super.key, this.onTap, required this.title, this.isLoading = false});
   final void Function()? onTap;
   final String title;
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,10 +23,12 @@ class CustomButton extends StatelessWidget {
         ),
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            title,
-            style: AppTextStyle.textStyle22,
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : Text(
+                  title,
+                  style: AppTextStyle.textStyle22,
+                ),
         ),
       ),
     );
