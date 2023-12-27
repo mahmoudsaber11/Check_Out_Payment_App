@@ -19,10 +19,14 @@ class StripeService {
     return paymentIntentModel;
   }
 
-  Future initPaymentSheet({required String paymentIntentClientSecret}) async {
+  Future initPaymentSheet(
+      {required String paymentIntentClientSecret,
+      required String ephemeralKeySecret}) async {
     await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: paymentIntentClientSecret,
+            customerEphemeralKeySecret: ephemeralKeySecret,
+            customerId: 'cus_PGUmjfCv702DGG',
             merchantDisplayName: "Saber"));
   }
 
@@ -34,22 +38,25 @@ class StripeService {
       {required PaymentIntentInputModel paymentIntentInputModel}) async {
     var paymentIntentModel = await createPaymentIntent(paymentIntentInputModel);
     await initPaymentSheet(
-        paymentIntentClientSecret: paymentIntentModel.clientSecret!);
+      paymentIntentClientSecret: paymentIntentModel.clientSecret!,
+      ephemeralKeySecret: '',
+    );
     await displayPaymentSheet();
   }
-  Future<PaymentIntentModel> createEphemeralKey(
-    {required String customerId}
-      ) async {
+
+  Future<EphemeralKeyModel> createEphemeralKey(
+      {required String customerId}) async {
     var response = await dioConsumer.postData(
-        body: {
-          'customer':customerId
-        },
-        contentType: Headers.formUrlEncodedContentType,
-        url: "https://api.stripe.com/v1/payment_intents",
-        token: ApiKeys.secretKey,
-        headers: {'Authorization': "Bearer ${ApiKeys.secretKey}"}
-        );
-    var ephemeralKeyModel = EphemeralKeyModel.;
-    return paymentIntentModel;
+      body: {'customer': customerId},
+      contentType: Headers.formUrlEncodedContentType,
+      url: "https://api.stripe.com/v1/payment_intents",
+      token: ApiKeys.secretKey,
+      headers: {
+        'Authorization': "Bearer ${ApiKeys.secretKey}",
+        'Stripe-Version': '2023-10-16'
+      },
+    );
+    var ephemeralKey = EphemeralKeyModel.fromJson(response.data);
+    return ephemeralKey;
   }
 }
