@@ -21,6 +21,6 @@ void main() async {
 //part two
 
 //PaymentIntentModel create payment intent(amount,currency,customerId)
-//createEphemeralKey(stripeVersion, customerId)
+//createEphemeralKey( customerId)
 //initPaymentSheet(merchantDisplayName , intentClientSecret , ephemeralKeySecret)
 //presentPaymentSheet()
